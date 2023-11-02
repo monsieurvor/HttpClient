@@ -473,7 +473,7 @@ int HttpClient::responseStatusCode()
             {
                 // We haven't got any data, so let's pause to allow some to
                 // arrive
-                delay(kHttpWaitForDataDelay);
+                vTaskDelay(kHttpWaitForDataDelay / portTICK_PERIOD_MS);
             }
         }
         if ( (c == '\n') && (iStatusCode < 200 && iStatusCode != 101) )
@@ -522,7 +522,7 @@ int HttpClient::skipResponseHeaders()
         {
             // We haven't got any data, so let's pause to allow some to
             // arrive
-            delay(kHttpWaitForDataDelay);
+            vTaskDelay(kHttpWaitForDataDelay / portTICK_PERIOD_MS);
         }
     }
     if (endOfHeadersReached())
