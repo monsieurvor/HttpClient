@@ -6,7 +6,7 @@
 #include "b64.h"
 
 // Initialize constants
-const char* HttpClient::kUserAgent = "Arduino/2.2.0";
+const char* HttpClient::kUserAgent = "BBOX/1.0.1";
 const char* HttpClient::kContentLengthPrefix = HTTP_HEADER_CONTENT_LENGTH ": ";
 const char* HttpClient::kTransferEncodingChunked = HTTP_HEADER_TRANSFER_ENCODING ": " HTTP_HEADER_VALUE_CHUNKED;
 
