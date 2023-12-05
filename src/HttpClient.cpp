@@ -3,7 +3,6 @@
 // Released under Apache License, version 2.0
 
 #include "HttpClient.h"
-#include "b64.h"
 
 // Initialize constants
 const char* HttpClient::kUserAgent = "BBOX/1.0.1";
@@ -200,55 +199,6 @@ void HttpClient::sendHeader(const char* aHeaderName, const int aHeaderValue)
     iClient->print(aHeaderName);
     iClient->print(": ");
     iClient->println(aHeaderValue);
-}
-
-void HttpClient::sendBasicAuth(const char* aUser, const char* aPassword)
-{
-    // Send the initial part of this header line
-    iClient->print("Authorization: Basic ");
-    // Now Base64 encode "aUser:aPassword" and send that
-    // This seems trickier than it should be but it's mostly to avoid either
-    // (a) some arbitrarily sized buffer which hopes to be big enough, or
-    // (b) allocating and freeing memory
-    // ...so we'll loop through 3 bytes at a time, outputting the results as we
-    // go.
-    // In Base64, each 3 bytes of unencoded data become 4 bytes of encoded data
-    unsigned char input[3];
-    unsigned char output[5]; // Leave space for a '\0' terminator so we can easily print
-    int userLen = strlen(aUser);
-    int passwordLen = strlen(aPassword);
-    int inputOffset = 0;
-    for (int i = 0; i < (userLen+1+passwordLen); i++)
-    {
-        // Copy the relevant input byte into the input
-        if (i < userLen)
-        {
-            input[inputOffset++] = aUser[i];
-        }
-        else if (i == userLen)
-        {
-            input[inputOffset++] = ':';
-        }
-        else
-        {
-            input[inputOffset++] = aPassword[i-(userLen+1)];
-        }
-        // See if we've got a chunk to encode
-        if ( (inputOffset == 3) || (i == userLen+passwordLen) )
-        {
-            // We've either got to a 3-byte boundary, or we've reached then end
-            b64_encode(input, inputOffset, output, 4);
-            // NUL-terminate the output string
-            output[4] = '\0';
-            // And write it out
-            iClient->print((char*)output);
-// FIXME We might want to fill output with '=' characters if b64_encode doesn't
-// FIXME do it for us when we're encoding the final chunk
-            inputOffset = 0;
-        }
-    }
-    // And end the header we've sent
-    iClient->println();
 }
 
 void HttpClient::finishHeaders()
