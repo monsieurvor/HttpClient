@@ -28,9 +28,6 @@ static const int HTTP_ERROR_INVALID_RESPONSE =-4;
 // of them, so saves code space and RAM
 #define HTTP_METHOD_GET    "GET"
 #define HTTP_METHOD_POST   "POST"
-#define HTTP_METHOD_PUT    "PUT"
-#define HTTP_METHOD_PATCH  "PATCH"
-#define HTTP_METHOD_DELETE "DELETE"
 #define HTTP_HEADER_CONTENT_LENGTH "Content-Length"
 #define HTTP_HEADER_CONTENT_TYPE   "Content-Type"
 #define HTTP_HEADER_CONNECTION     "Connection"
@@ -70,85 +67,6 @@ public:
         you are finished.
     */
     void beginBody();
-
-    /** Connect to the server and start to send a GET request.
-      @param aURLPath     Url to request
-      @return 0 if successful, else error
-    */
-    int get(const char* aURLPath);
-    int get(const String& aURLPath);
-
-    /** Connect to the server and start to send a POST request.
-      @param aURLPath     Url to request
-      @return 0 if successful, else error
-    */
-    int post(const char* aURLPath);
-    int post(const String& aURLPath);
-
-    /** Connect to the server and send a POST request
-        with body and content type
-      @param aURLPath     Url to request
-      @param aContentType Content type of request body
-      @param aBody        Body of the request
-      @return 0 if successful, else error
-    */
-    int post(const char* aURLPath, const char* aContentType, const char* aBody);
-    int post(const String& aURLPath, const String& aContentType, const String& aBody);
-    int post(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[]);
-
-    /** Connect to the server and start to send a PUT request.
-      @param aURLPath     Url to request
-      @return 0 if successful, else error
-    */
-    int put(const char* aURLPath);
-    int put(const String& aURLPath);
-
-    /** Connect to the server and send a PUT request
-        with body and content type
-      @param aURLPath     Url to request
-      @param aContentType Content type of request body
-      @param aBody        Body of the request
-      @return 0 if successful, else error
-    */
-    int put(const char* aURLPath, const char* aContentType, const char* aBody);
-    int put(const String& aURLPath, const String& aContentType, const String& aBody);
-    int put(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[]);
-
-    /** Connect to the server and start to send a PATCH request.
-      @param aURLPath     Url to request
-      @return 0 if successful, else error
-    */
-    int patch(const char* aURLPath);
-    int patch(const String& aURLPath);
-
-    /** Connect to the server and send a PATCH request
-        with body and content type
-      @param aURLPath     Url to request
-      @param aContentType Content type of request body
-      @param aBody        Body of the request
-      @return 0 if successful, else error
-    */
-    int patch(const char* aURLPath, const char* aContentType, const char* aBody);
-    int patch(const String& aURLPath, const String& aContentType, const String& aBody);
-    int patch(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[]);
-
-    /** Connect to the server and start to send a DELETE request.
-      @param aURLPath     Url to request
-      @return 0 if successful, else error
-    */
-    int del(const char* aURLPath);
-    int del(const String& aURLPath);
-
-    /** Connect to the server and send a DELETE request
-        with body and content type
-      @param aURLPath     Url to request
-      @param aContentType Content type of request body
-      @param aBody        Body of the request
-      @return 0 if successful, else error
-    */
-    int del(const char* aURLPath, const char* aContentType, const char* aBody);
-    int del(const String& aURLPath, const String& aContentType, const String& aBody);
-    int del(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[]);
 
     /** Connect to the server and start to send the request.
         If a body is provided, the entire request (including headers and body) will be sent
@@ -199,17 +117,6 @@ public:
 
     void sendHeader(const String& aHeaderName, const int aHeaderValue)
       { sendHeader(aHeaderName.c_str(), aHeaderValue); }
-
-    /** Send a basic authentication header.  This will encode the given username
-      and password, and send them in suitable header line for doing Basic
-      Authentication.
-      @param aUser Username for the authorization
-      @param aPassword Password for the user aUser
-    */
-    void sendBasicAuth(const char* aUser, const char* aPassword);
-
-    void sendBasicAuth(const String& aUser, const String& aPassword)
-      { sendBasicAuth(aUser.c_str(), aPassword.c_str()); }
 
     /** Get the HTTP status code contained in the response.
       For example, 200 for successful request, 404 for file not found, etc.
@@ -340,11 +247,11 @@ protected:
 
     // Number of milliseconds that we wait each time there isn't any data
     // available to be read (during status code and header processing)
-    static const int kHttpWaitForDataDelay = 1000;
+    static const int kHttpWaitForDataDelay = 500;
     // Number of milliseconds that we'll wait in total without receiving any
     // data before returning HTTP_ERROR_TIMED_OUT (during status code and header
     // processing)
-    static const int kHttpResponseTimeout = 30*1000;
+    static const int kHttpResponseTimeout = 20*500;
     static const char* kContentLengthPrefix;
     static const char* kTransferEncodingChunked;
     typedef enum {
