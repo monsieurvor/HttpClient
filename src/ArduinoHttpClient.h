@@ -6,6 +6,5 @@
 #define ArduinoHttpClient_h
 
 #include "HttpClient.h"
-#include "URLEncoder.h"
 
 #endif
