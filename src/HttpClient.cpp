@@ -280,116 +280,6 @@ void HttpClient::beginBody()
     // else the end of headers has already been sent, so nothing to do here
 }
 
-int HttpClient::get(const char* aURLPath)
-{
-    return startRequest(aURLPath, HTTP_METHOD_GET);
-}
-
-int HttpClient::get(const String& aURLPath)
-{
-    return get(aURLPath.c_str());
-}
-
-int HttpClient::post(const char* aURLPath)
-{
-    return startRequest(aURLPath, HTTP_METHOD_POST);
-}
-
-int HttpClient::post(const String& aURLPath)
-{
-    return post(aURLPath.c_str());
-}
-
-int HttpClient::post(const char* aURLPath, const char* aContentType, const char* aBody)
-{
-    return post(aURLPath, aContentType, strlen(aBody), (const byte*)aBody);
-}
-
-int HttpClient::post(const String& aURLPath, const String& aContentType, const String& aBody)
-{
-    return post(aURLPath.c_str(), aContentType.c_str(), aBody.length(), (const byte*)aBody.c_str());
-}
-
-int HttpClient::post(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[])
-{
-    return startRequest(aURLPath, HTTP_METHOD_POST, aContentType, aContentLength, aBody);
-}
-
-int HttpClient::put(const char* aURLPath)
-{
-    return startRequest(aURLPath, HTTP_METHOD_PUT);
-}
-
-int HttpClient::put(const String& aURLPath)
-{
-    return put(aURLPath.c_str());
-}
-
-int HttpClient::put(const char* aURLPath, const char* aContentType, const char* aBody)
-{
-    return put(aURLPath, aContentType, strlen(aBody),  (const byte*)aBody);
-}
-
-int HttpClient::put(const String& aURLPath, const String& aContentType, const String& aBody)
-{
-    return put(aURLPath.c_str(), aContentType.c_str(), aBody.length(), (const byte*)aBody.c_str());
-}
-
-int HttpClient::put(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[])
-{
-    return startRequest(aURLPath, HTTP_METHOD_PUT, aContentType, aContentLength, aBody);
-}
-
-int HttpClient::patch(const char* aURLPath)
-{
-    return startRequest(aURLPath, HTTP_METHOD_PATCH);
-}
-
-int HttpClient::patch(const String& aURLPath)
-{
-    return patch(aURLPath.c_str());
-}
-
-int HttpClient::patch(const char* aURLPath, const char* aContentType, const char* aBody)
-{
-    return patch(aURLPath, aContentType, strlen(aBody),  (const byte*)aBody);
-}
-
-int HttpClient::patch(const String& aURLPath, const String& aContentType, const String& aBody)
-{
-    return patch(aURLPath.c_str(), aContentType.c_str(), aBody.length(), (const byte*)aBody.c_str());
-}
-
-int HttpClient::patch(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[])
-{
-    return startRequest(aURLPath, HTTP_METHOD_PATCH, aContentType, aContentLength, aBody);
-}
-
-int HttpClient::del(const char* aURLPath)
-{
-    return startRequest(aURLPath, HTTP_METHOD_DELETE);
-}
-
-int HttpClient::del(const String& aURLPath)
-{
-    return del(aURLPath.c_str());
-}
-
-int HttpClient::del(const char* aURLPath, const char* aContentType, const char* aBody)
-{
-    return del(aURLPath, aContentType, strlen(aBody),  (const byte*)aBody);
-}
-
-int HttpClient::del(const String& aURLPath, const String& aContentType, const String& aBody)
-{
-    return del(aURLPath.c_str(), aContentType.c_str(), aBody.length(), (const byte*)aBody.c_str());
-}
-
-int HttpClient::del(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[])
-{
-    return startRequest(aURLPath, HTTP_METHOD_DELETE, aContentType, aContentLength, aBody);
-}
-
 int HttpClient::responseStatusCode()
 {
     if (iState < eRequestSent)
@@ -650,7 +540,6 @@ int HttpClient::available()
         return clientAvailable;
     }
 }
-
 
 int HttpClient::read()
 {
