@@ -40,6 +40,26 @@ void HttpClient::resetState()
   iChunkLength = 0;
 }
 
+int HttpClient::get(const char* aURLPath)
+{
+    return startRequest(aURLPath, HTTP_METHOD_GET);
+}
+
+int HttpClient::post(const char* aURLPath)
+{
+    return startRequest(aURLPath, HTTP_METHOD_POST);
+}
+
+int HttpClient::post(const char* aURLPath, const char* aContentType, const char* aBody)
+{
+    return post(aURLPath, aContentType, strlen(aBody), (const byte*)aBody);
+}
+
+int HttpClient::post(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[])
+{
+    return startRequest(aURLPath, HTTP_METHOD_POST, aContentType, aContentLength, aBody);
+}
+
 void HttpClient::stop()
 {
   iClient->stop();
