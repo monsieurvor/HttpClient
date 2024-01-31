@@ -49,6 +49,28 @@ public:
     HttpClient(Client& aClient, const String& aServerName, uint16_t aServerPort = kHttpPort);
     HttpClient(Client& aClient, const IPAddress& aServerAddress, uint16_t aServerPort = kHttpPort);
 
+    /** Connect to the server and start to send a GET request.
+      @param aURLPath     Url to request
+      @return 0 if successful, else error
+    */
+    int get(const char* aURLPath);
+
+    /** Connect to the server and start to send a POST request.
+      @param aURLPath     Url to request
+      @return 0 if successful, else error
+    */
+    int post(const char* aURLPath);
+
+    /** Connect to the server and send a POST request
+        with body and content type
+      @param aURLPath     Url to request
+      @param aContentType Content type of request body
+      @param aBody        Body of the request
+      @return 0 if successful, else error
+    */
+    int post(const char* aURLPath, const char* aContentType, const char* aBody);
+    int post(const char* aURLPath, const char* aContentType, int aContentLength, const byte aBody[]);
+
     /** Start a more complex request.
         Use this when you need to send additional headers in the request,
         but you will also need to call endRequest() when you are finished.
