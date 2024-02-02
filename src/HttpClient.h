@@ -312,7 +312,7 @@ protected:
     bool iIsChunked;
     // Stores the value of the current chunk length, if present
     int iChunkLength;
-    uint32_t iHttpResponseTimeout;
+    uint32_t iHttpResponseTimeout = kHttpResponseTimeout;
     bool iConnectionClose;
     bool iSendDefaultRequestHeaders;
     String iHeaderLine;
