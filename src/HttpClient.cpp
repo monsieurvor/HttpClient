@@ -235,6 +235,22 @@ void HttpClient::flushClientRx()
     }
 }
 
+bool HttpClient::tryConnect(HttpClient &http, const char *endpoint, const char *method, uint8_t retries)
+{
+    if (startRequest(endpoint, method) != HTTP_SUCCESS)
+    { 
+        for (i = 0; i < retries; i++)
+        {
+            stop();
+            vTaskDelay(30);
+            if (startRequest(endpoint, method) == HTTP_SUCCESS)
+                return true;
+        }
+        return false;
+    }
+    return true;
+}
+
 void HttpClient::endRequest()
 {
     beginBody();

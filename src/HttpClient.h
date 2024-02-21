@@ -250,6 +250,7 @@ public:
     /** Reading any pending data from the client (used in connection keep alive mode)
     */
     void flushClientRx();
+    bool tryConnect(const char *endpoint, const char *method, uint8_t retries = 1);
 protected:
     /** Reset internal state data back to the "just initialised" state
     */
