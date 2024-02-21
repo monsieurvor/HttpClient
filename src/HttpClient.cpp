@@ -235,7 +235,7 @@ void HttpClient::flushClientRx()
     }
 }
 
-bool HttpClient::tryConnect(HttpClient &http, const char *endpoint, const char *method, uint8_t retries)
+bool HttpClient::tryConnect(const char *endpoint, const char *method, uint8_t retries)
 {
     if (startRequest(endpoint, method) != HTTP_SUCCESS)
     { 
