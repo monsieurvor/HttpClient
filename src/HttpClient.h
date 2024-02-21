@@ -246,6 +246,10 @@ public:
     virtual operator bool() { return bool(iClient); };
     virtual uint32_t httpResponseTimeout() { return iHttpResponseTimeout; };
     virtual void setHttpResponseTimeout(uint32_t timeout) { iHttpResponseTimeout = timeout; };
+
+    /** Reading any pending data from the client (used in connection keep alive mode)
+    */
+    void flushClientRx();
 protected:
     /** Reset internal state data back to the "just initialised" state
     */
@@ -262,10 +266,6 @@ protected:
     /* Let the server know that we've reached the end of the headers
     */
     void finishHeaders();
-
-    /** Reading any pending data from the client (used in connection keep alive mode)
-    */
-    void flushClientRx();
 
     // Number of milliseconds that we wait each time there isn't any data
     // available to be read (during status code and header processing)
