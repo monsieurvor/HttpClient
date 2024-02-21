@@ -239,7 +239,7 @@ bool HttpClient::tryConnect(HttpClient &http, const char *endpoint, const char *
 {
     if (startRequest(endpoint, method) != HTTP_SUCCESS)
     { 
-        for (i = 0; i < retries; i++)
+        for (uint8_t i = 0; i < retries; i++)
         {
             stop();
             vTaskDelay(30);
