@@ -22,7 +22,7 @@ HttpClient::HttpClient(Client& aClient, const String& aServerName, uint16_t aSer
 }
 
 HttpClient::HttpClient(Client& aClient, const IPAddress& aServerAddress, uint16_t aServerPort)
- : iClient(&aClient), iServerName(NULL), iServerAddress(aServerAddress), iServerPort(aServerPort),
+ : iClient(&aClient), iServerName(aServerAddress.toString().c_str()), iServerAddress(aServerAddress), iServerPort(aServerPort),
    iConnectionClose(true), iSendDefaultRequestHeaders(true)
 {
   resetState();
