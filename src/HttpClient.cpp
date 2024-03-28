@@ -10,7 +10,7 @@ const char* HttpClient::kContentLengthPrefix = HTTP_HEADER_CONTENT_LENGTH ": ";
 const char* HttpClient::kTransferEncodingChunked = HTTP_HEADER_TRANSFER_ENCODING ": " HTTP_HEADER_VALUE_CHUNKED;
 
 HttpClient::HttpClient(Client& aClient, const char* aServerName, uint16_t aServerPort)
- : iClient(&aClient), iServerName(aServerName), iServerAddress(), iServerPort(aServerPort),
+ : iClient(&aClient), iServerName(aServerName), iServerAddress((uint32_t)0), iServerPort(aServerPort),
    iConnectionClose(true), iSendDefaultRequestHeaders(true)
 {
   resetState();
@@ -100,7 +100,7 @@ int HttpClient::startRequest(const char* aURLPath, const char* aHttpMethod,
 
     if (iConnectionClose || !iClient->connected())
     {
-        if (iServerName)
+        if (!iServerAddress)
         {
             if (!(iClient->connect(iServerName, iServerPort) > 0))
             {
