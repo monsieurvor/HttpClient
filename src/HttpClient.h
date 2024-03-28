@@ -47,7 +47,7 @@ public:
 
     HttpClient(Client& aClient, const char* aServerName, uint16_t aServerPort = kHttpPort);
     HttpClient(Client& aClient, const String& aServerName, uint16_t aServerPort = kHttpPort);
-    HttpClient(Client& aClient, const IPAddress& aServerAddress, uint16_t aServerPort = kHttpPort);
+    HttpClient(Client& aClient, IPAddress aServerAddress, uint16_t aServerPort = kHttpPort);
 
     /** Connect to the server and start to send a GET request.
       @param aURLPath     Url to request
