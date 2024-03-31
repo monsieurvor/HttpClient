@@ -246,7 +246,7 @@ public:
     virtual operator bool() { return bool(iClient); };
     virtual uint32_t httpResponseTimeout() { return iHttpResponseTimeout; };
     virtual void setHttpResponseTimeout(uint32_t timeout) { iHttpResponseTimeout = timeout; };
-    uint16_t waitForDataDelay() const { return iHttpWaitForDataDelay };
+    uint16_t waitForDataDelay() const { return iHttpWaitForDataDelay; };
     void setWaitForDataDelay(uint16_t delay) { iHttpWaitForDataDelay = delay; };
     /** Reading any pending data from the client (used in connection keep alive mode)
     */
