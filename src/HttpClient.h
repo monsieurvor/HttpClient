@@ -244,8 +244,9 @@ public:
     virtual void stop();
     virtual uint8_t connected() { return iClient->connected(); };
     virtual operator bool() { return bool(iClient); };
-    virtual uint32_t httpResponseTimeout() { return iHttpResponseTimeout; };
-    virtual void setHttpResponseTimeout(uint32_t timeout) { iHttpResponseTimeout = timeout; };
+
+    uint16_t httpResponseTimeout() const { return iHttpResponseTimeout; };
+    void setHttpResponseTimeout(uint32_t timeout) { iHttpResponseTimeout = timeout; };
     uint16_t waitForDataDelay() const { return iHttpWaitForDataDelay; };
     void setWaitForDataDelay(uint16_t delay) { iHttpWaitForDataDelay = delay; };
     /** Reading any pending data from the client (used in connection keep alive mode)
@@ -271,11 +272,11 @@ protected:
 
     // Number of milliseconds that we wait each time there isn't any data
     // available to be read (during status code and header processing)
-    static const int kHttpWaitForDataDelay = 400;
+    static const uint16_t kHttpWaitForDataDelay = 400;
     // Number of milliseconds that we'll wait in total without receiving any
     // data before returning HTTP_ERROR_TIMED_OUT (during status code and header
     // processing)
-    static const int kHttpResponseTimeout = 15*kHttpWaitForDataDelay;
+    static const uint16_t kHttpResponseTimeout = 15*kHttpWaitForDataDelay;
     static const char* kContentLengthPrefix;
     static const char* kTransferEncodingChunked;
     typedef enum {
@@ -315,7 +316,7 @@ protected:
     // Stores the value of the current chunk length, if present
     int iChunkLength;
     uint16_t iHttpWaitForDataDelay = kHttpWaitForDataDelay;
-    uint32_t iHttpResponseTimeout = kHttpResponseTimeout;
+    uint16_t iHttpResponseTimeout = kHttpResponseTimeout;
     bool iConnectionClose;
     bool iSendDefaultRequestHeaders;
     String iHeaderLine;
