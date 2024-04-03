@@ -100,7 +100,7 @@ int HttpClient::startRequest(const char* aURLPath, const char* aHttpMethod,
 
     if (iConnectionClose || !iClient->connected())
     {
-        if (!iServerName)
+        if (iServerName)
         {
             if (!(iClient->connect(iServerName, iServerPort) > 0))
             {
