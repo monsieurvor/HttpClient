@@ -22,7 +22,7 @@ HttpClient::HttpClient(Client& aClient, const String& aServerName, uint16_t aSer
 }
 
 HttpClient::HttpClient(Client& aClient, IPAddress aServerAddress, uint16_t aServerPort)
- : iClient(&aClient), iServerName(aServerAddress.toString().c_str()), iServerAddress(aServerAddress), iServerPort(aServerPort),
+ : iClient(&aClient), iServerName(NULL), iServerAddress(aServerAddress), iServerPort(aServerPort),
    iConnectionClose(true), iSendDefaultRequestHeaders(true)
 {
   resetState();
@@ -100,7 +100,7 @@ int HttpClient::startRequest(const char* aURLPath, const char* aHttpMethod,
 
     if (iConnectionClose || !iClient->connected())
     {
-        if (!iServerAddress)
+        if (!ServerName)
         {
             if (!(iClient->connect(iServerName, iServerPort) > 0))
             {
@@ -174,18 +174,18 @@ int HttpClient::sendInitialHeaders(const char* aURLPath, const char* aHttpMethod
     iClient->println(" HTTP/1.1");
     if (iSendDefaultRequestHeaders)
     {
-        // The host header, if required
+        // The host header
+        iClient->print("Host: ");
         if (iServerName)
-        {
-            iClient->print("Host: ");
             iClient->print(iServerName);
-            if (iServerPort != kHttpPort)
-            {
-              iClient->print(":");
-              iClient->print(iServerPort);
-            }
-            iClient->println();
+        else
+            iClient->printf("%u.%u.%u.%u" iServerAddress[0], iServerAddress[1], iServerAddress[2], iServerAddress[3]);
+        if (iServerPort != kHttpPort)
+        {
+            iClient->print(":");
+            iClient->print(iServerPort);
         }
+        iClient->println();
         // And user-agent string
         sendHeader(HTTP_HEADER_USER_AGENT, kUserAgent);
     }
