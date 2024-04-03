@@ -179,7 +179,7 @@ int HttpClient::sendInitialHeaders(const char* aURLPath, const char* aHttpMethod
         if (iServerName)
             iClient->print(iServerName);
         else
-            iClient->printf("%u.%u.%u.%u" iServerAddress[0], iServerAddress[1], iServerAddress[2], iServerAddress[3]);
+            iClient->printf("%u.%u.%u.%u", iServerAddress[0], iServerAddress[1], iServerAddress[2], iServerAddress[3]);
         if (iServerPort != kHttpPort)
         {
             iClient->print(":");
